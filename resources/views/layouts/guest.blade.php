@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'Nethra Health') }}</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=space-grotesk:400,500,600,700&display=swap" rel="stylesheet" />
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen flex flex-col items-center justify-center bg-slate-950 px-4 py-10">
+            <div>
+                <a href="/">
+                    <x-application-logo class="h-16 w-16 fill-current text-nethra-300 drop-shadow-[0_0_25px_rgba(250,204,21,0.25)]" />
+                </a>
+            </div>
+
+            <div class="mt-6 w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 px-6 py-6 shadow-2xl shadow-black/40 sm:max-w-md">
+                {{ $slot }}
+            </div>
+        </div>
+    </body>
+</html>

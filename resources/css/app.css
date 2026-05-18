@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    body {
+        @apply bg-slate-950 text-slate-100;
+        background-image:
+            radial-gradient(circle at top left, rgba(250, 204, 21, 0.16), transparent 30%),
+            radial-gradient(circle at top right, rgba(168, 85, 247, 0.14), transparent 28%),
+            linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 1));
+    }
+
+    ::selection {
+        @apply bg-ankhor-500/40 text-white;
+    }
+}
+
+@layer components {
+    .panel {
+        @apply rounded-[2rem] border border-white/10 bg-slate-900/75 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl;
+    }
+
+    .stat-card {
+        @apply rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20 backdrop-blur;
+    }
+
+    .stat-label {
+        @apply text-xs font-semibold uppercase tracking-[0.35em] text-slate-400;
+    }
+
+    .stat-value {
+        @apply mt-4 text-3xl font-semibold text-white;
+    }
+
+    .stat-hint {
+        @apply mt-2 text-sm text-slate-400;
+    }
+}
