@@ -8,7 +8,13 @@
     </x-slot>
 
     <div class="nhealth-shell-content">
-        <x-nhealth.flash :message="session('status')" />
+        <x-nhealth.flash :message="session('status')" title="Weight entry updated" />
+
+        @if ($errors->any())
+            <x-nhealth.alert type="error" title="Validation issue">
+                The weight entry could not be saved yet. Review the highlighted fields and try again.
+            </x-nhealth.alert>
+        @endif
 
         <div class="grid gap-6 lg:grid-cols-[0.9fr,1.1fr]">
             <x-nhealth.section eyebrow="Capture" title="Add weight entry">
@@ -50,6 +56,20 @@
             </x-nhealth.section>
 
             <x-nhealth.section eyebrow="History" title="Recent weigh-ins">
+                <div class="mb-5 grid gap-4 sm:grid-cols-2">
+                    <x-nhealth.widget-card
+                        label="Logged entries"
+                        :value="$weightEntries->total()"
+                        hint="Dedicated weight measurements stored in your private history."
+                    />
+                    <x-nhealth.widget-card
+                        label="Capture rhythm"
+                        value="Consistent logging"
+                        hint="Use the same scale and time of day when possible for cleaner trends."
+                        variant="secondary"
+                    />
+                </div>
+
                 <x-nhealth.table>
                     <thead class="bg-white/5 text-left text-xs uppercase tracking-[0.3em] text-slate-400">
                         <tr>

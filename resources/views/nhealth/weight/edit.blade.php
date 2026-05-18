@@ -8,7 +8,13 @@
     </x-slot>
 
     <div class="nhealth-shell-form">
-        <x-nhealth.flash :message="session('status')" />
+        <x-nhealth.flash :message="session('status')" title="Weight entry updated" />
+
+        @if ($errors->any())
+            <x-nhealth.alert type="error" title="Validation issue">
+                The weight changes are not complete yet. Review the highlighted fields before saving.
+            </x-nhealth.alert>
+        @endif
 
         <div class="grid gap-6 lg:grid-cols-[1fr,auto]">
             <x-nhealth.section eyebrow="Weight builder" title="Update weight entry">
@@ -50,11 +56,17 @@
                 </form>
             </x-nhealth.section>
 
-            <div class="panel h-fit">
+            <div class="panel h-fit lg:w-64">
+                <p class="text-sm font-semibold text-white">Danger zone</p>
+                <p class="mt-2 text-sm leading-6 text-slate-400">
+                    Delete this weigh-in only if it is incorrect and should not influence your private trend history.
+                </p>
                 <form method="POST" action="{{ route('nhealth.weight.destroy', $weightEntry) }}">
                     @csrf
                     @method('DELETE')
-                    <x-danger-button>Delete entry</x-danger-button>
+                    <div class="mt-4">
+                        <x-danger-button>Delete entry</x-danger-button>
+                    </div>
                 </form>
             </div>
         </div>

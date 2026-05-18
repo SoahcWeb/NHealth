@@ -14,12 +14,12 @@
             <h3 class="nhealth-section-title">{{ $title }}</h3>
 
             @if ($description)
-                <p class="mt-2 text-sm text-slate-400">{{ $description }}</p>
+                <p class="mt-2 text-sm leading-6 text-slate-400">{{ $description }}</p>
             @endif
         </div>
 
         @isset($action)
-            <div class="flex flex-wrap gap-3">
+            <div class="flex w-full flex-wrap gap-3 md:w-auto md:justify-end">
                 {{ $action }}
             </div>
         @endisset

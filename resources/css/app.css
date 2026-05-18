@@ -73,8 +73,20 @@
         @apply rounded-2xl border p-4 shadow-lg shadow-black/10;
     }
 
+    .nhealth-subtle-card {
+        @apply rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/10;
+    }
+
+    .nhealth-empty {
+        @apply rounded-3xl border border-dashed border-white/10 bg-white/5 p-6 text-sm text-slate-400;
+    }
+
     .nhealth-form-grid {
         @apply grid gap-5 md:grid-cols-2;
+    }
+
+    .nhealth-form-stack {
+        @apply grid gap-6;
     }
 
     .nhealth-textarea {
@@ -91,5 +103,13 @@
 
     .nhealth-accent-link {
         @apply inline-flex items-center rounded-full border border-ankhor-400/40 bg-ankhor-500/10 px-4 py-2 text-sm font-medium text-ankhor-300 transition hover:border-ankhor-300 hover:bg-ankhor-500/20;
+    }
+
+    .nhealth-shortcut {
+        @apply rounded-3xl border border-white/10 bg-white/5 p-5 transition duration-200 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-xl hover:shadow-black/10;
+    }
+
+    .nhealth-chart-frame {
+        @apply rounded-3xl border border-white/10 bg-slate-950/60 p-4;
     }
 }

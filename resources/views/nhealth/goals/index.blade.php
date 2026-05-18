@@ -8,7 +8,23 @@
     </x-slot>
 
     <div class="nhealth-shell-content">
-        <x-nhealth.flash :message="session('status')" />
+        <x-nhealth.flash :message="session('status')" title="Goals updated" />
+
+        <section class="grid gap-4 md:grid-cols-3">
+            <x-nhealth.stat-card label="Total goals" :value="$goals->total()" hint="All goals visible in your private goal tracker." />
+            <x-nhealth.stat-card
+                label="Active goals"
+                :value="$goals->getCollection()->where('status', 'active')->count()"
+                hint="Goals currently driving your transformation."
+                variant="accent"
+            />
+            <x-nhealth.stat-card
+                label="Next step"
+                value="Refine focus"
+                hint="Keep one clear active goal and archive outdated targets."
+                variant="secondary"
+            />
+        </section>
 
         <x-nhealth.section eyebrow="Library" title="Goal tracker">
             <x-nhealth.table>

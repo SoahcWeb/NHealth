@@ -13,12 +13,12 @@
     };
 @endphp
 
-<div {{ $attributes->merge(['class' => "nhealth-widget {$variantClasses}"]) }}>
+<div {{ $attributes->merge(['class' => "nhealth-widget h-full {$variantClasses}"]) }}>
     <p class="text-xs uppercase tracking-[0.25em] text-slate-400">{{ $label }}</p>
     <p class="mt-2 text-lg font-semibold text-white">{{ $value }}</p>
 
     @if ($hint)
-        <p class="mt-2 text-sm text-slate-400">{{ $hint }}</p>
+        <p class="mt-2 text-sm leading-6 text-slate-400">{{ $hint }}</p>
     @endif
 
     @if (trim((string) $slot) !== '')

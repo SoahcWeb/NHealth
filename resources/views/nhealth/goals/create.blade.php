@@ -1,11 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-nhealth.page-header eyebrow="NHealth goals" title="Create goal" :description="'Active goals: ' . $activeGoalsCount" />
+        <x-nhealth.page-header eyebrow="NHealth goals" title="Create goal" :description="'Active goals: ' . $activeGoalsCount">
+            <x-slot name="action">
+                <a href="{{ route('nhealth.goals.index') }}" class="nhealth-ghost-link">Back to list</a>
+            </x-slot>
+        </x-nhealth.page-header>
     </x-slot>
 
     <div class="nhealth-shell-form">
+        @if ($errors->any())
+            <x-nhealth.alert type="error" title="Validation issue">
+                The goal could not be saved yet. Review the highlighted fields and try again.
+            </x-nhealth.alert>
+        @endif
+
         <x-nhealth.section eyebrow="Goal builder" title="Goal setup">
-            <form method="POST" action="{{ route('nhealth.goals.store') }}" class="grid gap-6">
+            <form method="POST" action="{{ route('nhealth.goals.store') }}" class="nhealth-form-stack">
                 @csrf
 
                 <div>

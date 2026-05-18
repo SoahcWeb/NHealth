@@ -4,7 +4,11 @@
             eyebrow="NHealth cockpit"
             title="Personal dashboard"
             description="Your private overview of health profile, goals, weight tracking and daily journal."
-        />
+        >
+            <x-slot name="action">
+                <a href="{{ route('check-ins.index') }}" class="nhealth-accent-link">Open daily journal</a>
+            </x-slot>
+        </x-nhealth.page-header>
     </x-slot>
 
     <div class="nhealth-shell">
@@ -74,9 +78,10 @@
 
                     <x-nhealth.widget-card class="mt-4" label="Health notes" :value="$healthProfile->health_notes ?: 'No health notes saved yet.'" />
                 @else
-                    <div class="rounded-3xl border border-dashed border-white/10 bg-white/5 p-6 text-sm text-slate-400">
-                        Your health profile has not been filled yet. Add your baseline information to personalize the cockpit.
-                    </div>
+                    <x-nhealth.empty-state
+                        title="Profile still empty"
+                        message="Add your baseline information to personalize the cockpit and improve the meaning of your stats."
+                    />
                 @endif
             </x-nhealth.section>
 
@@ -127,9 +132,12 @@
                         </div>
                     </div>
                 @else
-                    <div class="rounded-3xl border border-dashed border-white/10 bg-white/5 p-6 text-sm text-slate-400">
-                        No active goal yet. Create one to track progress from the dashboard.
-                    </div>
+                    <x-nhealth.empty-state
+                        title="No active goal"
+                        message="Create an active target to unlock progress visibility and give the cockpit a clear focus."
+                    >
+                        <a href="{{ route('nhealth.goals.create') }}" class="nhealth-accent-link">Create goal</a>
+                    </x-nhealth.empty-state>
                 @endif
             </x-nhealth.section>
         </section>
@@ -149,7 +157,7 @@
                     />
                 </div>
 
-                <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/60 p-4">
+                <div class="nhealth-chart-frame mt-6">
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm font-medium text-white">Weight trend</p>
@@ -168,8 +176,11 @@
                             ></canvas>
                         </div>
                     @else
-                        <div class="mt-4 flex h-72 items-center justify-center rounded-2xl border border-dashed border-white/10 bg-white/5 text-center text-sm text-slate-400">
-                            Add at least two weight entries to unlock the evolution chart.
+                        <div class="mt-4">
+                            <x-nhealth.empty-state
+                                class="flex h-72 items-center justify-center text-center"
+                                message="Add at least two weight entries to unlock the evolution chart."
+                            />
                         </div>
                     @endif
                 </div>
@@ -191,12 +202,15 @@
 
                     <x-nhealth.widget-card class="mt-4" label="Notes" :value="$latestCheckIn->notes ?: 'No notes saved for the latest check-in.'" />
                 @else
-                    <div class="rounded-3xl border border-dashed border-white/10 bg-white/5 p-6 text-sm text-slate-400">
-                        No check-in yet. Start the daily journal to populate this cockpit section.
-                    </div>
+                    <x-nhealth.empty-state
+                        title="No journal data yet"
+                        message="Start the daily journal to populate this cockpit section with mood, energy and recovery context."
+                    >
+                        <a href="{{ route('check-ins.index') }}" class="nhealth-accent-link">Start check-in</a>
+                    </x-nhealth.empty-state>
                 @endif
 
-                <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/60 p-4">
+                <div class="nhealth-chart-frame mt-6">
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm font-medium text-white">Habit summary</p>
@@ -218,26 +232,30 @@
 
         <x-nhealth.section eyebrow="Shortcuts" title="Quick access" description="Jump directly into the core NHealth workflows.">
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                <a href="{{ route('nhealth.profile.edit') }}" class="rounded-3xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Profile</p>
-                    <p class="mt-3 text-lg font-semibold text-white">Health profile</p>
-                    <p class="mt-2 text-sm text-slate-400">Maintain baseline health information.</p>
-                </a>
-                <a href="{{ route('nhealth.goals.index') }}" class="rounded-3xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Goals</p>
-                    <p class="mt-3 text-lg font-semibold text-white">Transformation goals</p>
-                    <p class="mt-2 text-sm text-slate-400">Create, review and adjust active targets.</p>
-                </a>
-                <a href="{{ route('nhealth.weight.index') }}" class="rounded-3xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Weight</p>
-                    <p class="mt-3 text-lg font-semibold text-white">Weight history</p>
-                    <p class="mt-2 text-sm text-slate-400">Track dedicated weigh-ins over time.</p>
-                </a>
-                <a href="{{ route('check-ins.index') }}" class="rounded-3xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Journal</p>
-                    <p class="mt-3 text-lg font-semibold text-white">Daily check-ins</p>
-                    <p class="mt-2 text-sm text-slate-400">Capture sleep, mood, stress and notes.</p>
-                </a>
+                <x-nhealth.shortcut-card
+                    href="{{ route('nhealth.profile.edit') }}"
+                    eyebrow="Profile"
+                    title="Health profile"
+                    description="Maintain baseline health information."
+                />
+                <x-nhealth.shortcut-card
+                    href="{{ route('nhealth.goals.index') }}"
+                    eyebrow="Goals"
+                    title="Transformation goals"
+                    description="Create, review and adjust active targets."
+                />
+                <x-nhealth.shortcut-card
+                    href="{{ route('nhealth.weight.index') }}"
+                    eyebrow="Weight"
+                    title="Weight history"
+                    description="Track dedicated weigh-ins over time."
+                />
+                <x-nhealth.shortcut-card
+                    href="{{ route('check-ins.index') }}"
+                    eyebrow="Journal"
+                    title="Daily check-ins"
+                    description="Capture sleep, mood, stress and notes."
+                />
             </div>
         </x-nhealth.section>
     </div>

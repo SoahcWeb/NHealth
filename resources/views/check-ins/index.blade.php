@@ -9,22 +9,20 @@
         </div>
     </x-slot>
 
-    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
+    <div class="nhealth-shell">
         @if (session('status'))
-            <div class="rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-                {{ session('status') }}
-            </div>
+            <x-nhealth.flash :message="session('status')" title="Journal updated" />
         @endif
 
         @if ($errors->any())
-            <div class="rounded-2xl border border-rose-400/25 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
+            <x-nhealth.alert type="error" title="Validation issue">
                 <p class="font-medium">Please correct the highlighted fields and try again.</p>
                 <ul class="mt-2 list-disc space-y-1 pl-5 text-rose-100/90">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div>
+            </x-nhealth.alert>
         @endif
 
         <section class="grid gap-6 lg:grid-cols-[1.15fr,0.85fr]">
@@ -167,13 +165,7 @@
 
                     <div>
                         <x-input-label for="notes" value="Notes" />
-                        <textarea
-                            id="notes"
-                            name="notes"
-                            rows="4"
-                            class="mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-ankhor-400 focus:ring-ankhor-400"
-                            placeholder="Workout, meals, recovery, stress, wins..."
-                        >{{ old('notes', $todayCheckIn?->notes) }}</textarea>
+                        <textarea id="notes" name="notes" rows="4" class="nhealth-textarea" placeholder="Workout, meals, recovery, stress, wins...">{{ old('notes', $todayCheckIn?->notes) }}</textarea>
                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                     </div>
 
@@ -313,9 +305,10 @@
                         </div>
                     </article>
                 @empty
-                    <div class="rounded-3xl border border-dashed border-white/10 bg-white/5 p-8 text-center text-slate-400">
-                        No check-ins yet. Add your first private journal entry to start building your daily history.
-                    </div>
+                    <x-nhealth.empty-state
+                        class="p-8 text-center"
+                        message="No check-ins yet. Add your first private journal entry to start building your daily history."
+                    />
                 @endforelse
             </div>
 

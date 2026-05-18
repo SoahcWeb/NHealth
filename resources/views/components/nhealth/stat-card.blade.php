@@ -13,12 +13,12 @@
     };
 @endphp
 
-<article {{ $attributes->merge(['class' => "stat-card {$variantClasses}"]) }}>
+<article {{ $attributes->merge(['class' => "stat-card h-full {$variantClasses}"]) }}>
     <p class="stat-label">{{ $label }}</p>
     <div class="stat-value">{{ $value }}</div>
 
     @if ($hint)
-        <p class="stat-hint">{{ $hint }}</p>
+        <p class="stat-hint max-w-xs leading-6">{{ $hint }}</p>
     @endif
 
     @isset($footer)

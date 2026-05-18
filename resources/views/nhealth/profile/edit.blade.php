@@ -8,10 +8,16 @@
     </x-slot>
 
     <div class="nhealth-shell-form">
-        <x-nhealth.flash :message="session('status')" />
+        <x-nhealth.flash :message="session('status')" title="Profile updated" />
+
+        @if ($errors->any())
+            <x-nhealth.alert type="error" title="Validation issue">
+                Please review the highlighted profile fields before saving again.
+            </x-nhealth.alert>
+        @endif
 
         <x-nhealth.section eyebrow="Baseline data" title="Profile details">
-            <form method="POST" action="{{ route('nhealth.profile.update') }}" class="grid gap-6">
+            <form method="POST" action="{{ route('nhealth.profile.update') }}" class="nhealth-form-stack">
                 @csrf
                 @method('PATCH')
 
