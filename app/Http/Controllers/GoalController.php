@@ -16,7 +16,7 @@ class GoalController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('goals.index', [
+        return view('nhealth.goals.index', [
             'goals' => $request->user()->goals()->latest()->paginate(10),
         ]);
     }
@@ -26,7 +26,7 @@ class GoalController extends Controller
      */
     public function create(Request $request): View
     {
-        return view('goals.create', [
+        return view('nhealth.goals.create', [
             'goal' => new Goal([
                 'status' => 'active',
             ]),
@@ -42,7 +42,7 @@ class GoalController extends Controller
         $request->user()->goals()->create($request->validated());
 
         return redirect()
-            ->route('goals.index')
+            ->route('nhealth.goals.index')
             ->with('status', 'Goal created.');
     }
 
@@ -51,7 +51,7 @@ class GoalController extends Controller
      */
     public function edit(Request $request, Goal $goal): View
     {
-        return view('goals.edit', [
+        return view('nhealth.goals.edit', [
             'goal' => $this->findUserGoalOrFail($request, $goal),
         ]);
     }
@@ -65,7 +65,7 @@ class GoalController extends Controller
         $goal->update($request->validated());
 
         return redirect()
-            ->route('goals.index')
+            ->route('nhealth.goals.index')
             ->with('status', 'Goal updated.');
     }
 
@@ -77,7 +77,7 @@ class GoalController extends Controller
         $this->findUserGoalOrFail($request, $goal)->delete();
 
         return redirect()
-            ->route('goals.index')
+            ->route('nhealth.goals.index')
             ->with('status', 'Goal deleted.');
     }
 

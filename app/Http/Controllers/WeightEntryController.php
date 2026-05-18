@@ -17,7 +17,7 @@ class WeightEntryController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('weight-entries.index', [
+        return view('nhealth.weight.index', [
             'weightEntries' => $request->user()->weightEntries()->latest('recorded_on')->paginate(15),
             'defaultRecordedOn' => now()->toDateString(),
         ]);
@@ -42,7 +42,7 @@ class WeightEntryController extends Controller
         }
 
         return redirect()
-            ->route('weight-entries.index')
+            ->route('nhealth.weight.index')
             ->with('status', $weightEntry->wasRecentlyCreated ? 'Weight entry saved.' : 'Weight entry updated for that date.');
     }
 
@@ -51,7 +51,7 @@ class WeightEntryController extends Controller
      */
     public function edit(Request $request, WeightEntry $weightEntry): View
     {
-        return view('weight-entries.edit', [
+        return view('nhealth.weight.edit', [
             'weightEntry' => $this->findUserWeightEntryOrFail($request, $weightEntry),
         ]);
     }
@@ -71,7 +71,7 @@ class WeightEntryController extends Controller
         $weightEntry->update($validated);
 
         return redirect()
-            ->route('weight-entries.index')
+            ->route('nhealth.weight.index')
             ->with('status', 'Weight entry updated.');
     }
 
@@ -83,7 +83,7 @@ class WeightEntryController extends Controller
         $this->findUserWeightEntryOrFail($request, $weightEntry)->delete();
 
         return redirect()
-            ->route('weight-entries.index')
+            ->route('nhealth.weight.index')
             ->with('status', 'Weight entry deleted.');
     }
 

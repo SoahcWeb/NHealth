@@ -14,7 +14,7 @@ class HealthProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('health-profile.edit', [
+        return view('nhealth.profile.edit', [
             'healthProfile' => $request->user()->healthProfile,
         ]);
     }
@@ -30,7 +30,7 @@ class HealthProfileController extends Controller
         );
 
         return redirect()
-            ->route('health-profile.edit')
+            ->route('nhealth.profile.edit')
             ->with('status', $healthProfile->wasRecentlyCreated ? 'Health profile created.' : 'Health profile updated.');
     }
 }
