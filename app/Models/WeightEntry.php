@@ -10,19 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'user_id',
     'recorded_on',
     'weight_kg',
-    'sleep_hours',
-    'steps',
-    'water_intake_liters',
-    'energy_level',
-    'mood_level',
-    'stress_level',
+    'source',
     'notes',
     'metadata',
 ])]
-class CheckIn extends Model
+class WeightEntry extends Model
 {
     /**
-     * Get the authenticated owner of the check-in.
+     * Get the user that owns the weight entry.
      */
     public function user(): BelongsTo
     {
@@ -30,7 +25,7 @@ class CheckIn extends Model
     }
 
     /**
-     * Cast health metrics to the right scalar types.
+     * Cast weight tracking values to the proper types.
      *
      * @return array<string, string>
      */
@@ -39,12 +34,6 @@ class CheckIn extends Model
         return [
             'recorded_on' => 'date',
             'weight_kg' => 'decimal:2',
-            'sleep_hours' => 'decimal:2',
-            'steps' => 'integer',
-            'water_intake_liters' => 'decimal:2',
-            'energy_level' => 'integer',
-            'mood_level' => 'integer',
-            'stress_level' => 'integer',
             'metadata' => 'array',
         ];
     }
