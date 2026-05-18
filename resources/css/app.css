@@ -22,11 +22,11 @@
 
 @layer components {
     .panel {
-        @apply rounded-[2rem] border border-white/10 bg-slate-900/75 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl;
+        @apply rounded-[2rem] border border-white/10 bg-slate-900/75 p-5 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-6;
     }
 
     .stat-card {
-        @apply rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20 backdrop-blur;
+        @apply rounded-[2rem] border bg-white/5 p-5 shadow-xl shadow-black/20 backdrop-blur;
     }
 
     .stat-label {
@@ -34,10 +34,62 @@
     }
 
     .stat-value {
-        @apply mt-4 text-3xl font-semibold text-white;
+        @apply mt-4 text-3xl font-semibold text-white sm:text-[2rem];
     }
 
     .stat-hint {
         @apply mt-2 text-sm text-slate-400;
+    }
+
+    .nhealth-shell {
+        @apply mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8;
+    }
+
+    .nhealth-shell-form {
+        @apply mx-auto flex max-w-4xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8;
+    }
+
+    .nhealth-shell-content {
+        @apply mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8;
+    }
+
+    .nhealth-eyebrow {
+        @apply text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300;
+    }
+
+    .nhealth-page-title {
+        @apply mt-2 text-3xl font-semibold text-white sm:text-4xl;
+    }
+
+    .nhealth-section-title {
+        @apply mt-2 text-xl font-semibold text-white sm:text-2xl;
+    }
+
+    .nhealth-copy {
+        @apply text-sm leading-6 text-slate-300;
+    }
+
+    .nhealth-widget {
+        @apply rounded-2xl border p-4 shadow-lg shadow-black/10;
+    }
+
+    .nhealth-form-grid {
+        @apply grid gap-5 md:grid-cols-2;
+    }
+
+    .nhealth-textarea {
+        @apply mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-ankhor-400 focus:ring-ankhor-400;
+    }
+
+    .nhealth-select {
+        @apply mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-slate-100 focus:border-ankhor-400 focus:ring-ankhor-400;
+    }
+
+    .nhealth-ghost-link {
+        @apply rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-100 transition hover:bg-white/10;
+    }
+
+    .nhealth-accent-link {
+        @apply inline-flex items-center rounded-full border border-ankhor-400/40 bg-ankhor-500/10 px-4 py-2 text-sm font-medium text-ankhor-300 transition hover:border-ankhor-300 hover:bg-ankhor-500/20;
     }
 }

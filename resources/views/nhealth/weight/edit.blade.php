@@ -1,25 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">NHealth weight</p>
-                <h2 class="text-3xl font-semibold text-white">Edit weight entry</h2>
-            </div>
-            <a href="{{ route('nhealth.weight.index') }}" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-100 transition hover:bg-white/10">
-                Back to list
-            </a>
-        </div>
+        <x-nhealth.page-header eyebrow="NHealth weight" title="Edit weight entry">
+            <x-slot name="action">
+                <a href="{{ route('nhealth.weight.index') }}" class="nhealth-ghost-link">Back to list</a>
+            </x-slot>
+        </x-nhealth.page-header>
     </x-slot>
 
-    <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-        @if (session('status'))
-            <div class="mb-6 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
-                {{ session('status') }}
-            </div>
-        @endif
+    <div class="nhealth-shell-form">
+        <x-nhealth.flash :message="session('status')" />
 
         <div class="grid gap-6 lg:grid-cols-[1fr,auto]">
-            <div class="panel">
+            <x-nhealth.section eyebrow="Weight builder" title="Update weight entry">
                 <form method="POST" action="{{ route('nhealth.weight.update', $weightEntry) }}" class="grid gap-5">
                     @csrf
                     @method('PATCH')
@@ -38,7 +30,7 @@
 
                     <div>
                         <x-input-label for="source" value="Source" />
-                        <select id="source" name="source" class="mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-slate-100 focus:border-ankhor-400 focus:ring-ankhor-400">
+                        <select id="source" name="source" class="nhealth-select">
                             @foreach (['manual' => 'Manual', 'scale' => 'Scale', 'import' => 'Import'] as $value => $label)
                                 <option value="{{ $value }}" @selected(old('source', $weightEntry->source) === $value)>{{ $label }}</option>
                             @endforeach
@@ -48,7 +40,7 @@
 
                     <div>
                         <x-input-label for="notes" value="Notes" />
-                        <textarea id="notes" name="notes" rows="4" class="mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-ankhor-400 focus:ring-ankhor-400">{{ old('notes', $weightEntry->notes) }}</textarea>
+                        <textarea id="notes" name="notes" rows="4" class="nhealth-textarea">{{ old('notes', $weightEntry->notes) }}</textarea>
                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                     </div>
 
@@ -56,7 +48,7 @@
                         <x-primary-button>Save changes</x-primary-button>
                     </div>
                 </form>
-            </div>
+            </x-nhealth.section>
 
             <div class="panel h-fit">
                 <form method="POST" action="{{ route('nhealth.weight.destroy', $weightEntry) }}">

@@ -1,16 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">NHealth goals</p>
-                <h2 class="text-3xl font-semibold text-white">Create goal</h2>
-            </div>
-            <p class="text-sm text-slate-400">Active goals: {{ $activeGoalsCount }}</p>
-        </div>
+        <x-nhealth.page-header eyebrow="NHealth goals" title="Create goal" :description="'Active goals: ' . $activeGoalsCount" />
     </x-slot>
 
-    <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-        <div class="panel">
+    <div class="nhealth-shell-form">
+        <x-nhealth.section eyebrow="Goal builder" title="Goal setup">
             <form method="POST" action="{{ route('nhealth.goals.store') }}" class="grid gap-6">
                 @csrf
 
@@ -22,11 +16,11 @@
 
                 <div>
                     <x-input-label for="description" value="Description" />
-                    <textarea id="description" name="description" rows="4" class="mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-ankhor-400 focus:ring-ankhor-400">{{ old('description', $goal->description) }}</textarea>
+                    <textarea id="description" name="description" rows="4" class="nhealth-textarea">{{ old('description', $goal->description) }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
-                <div class="grid gap-6 md:grid-cols-2">
+                <div class="nhealth-form-grid">
                     <div>
                         <x-input-label for="goal_type" value="Goal type" />
                         <x-text-input id="goal_type" name="goal_type" type="text" class="mt-2 block w-full" :value="old('goal_type', $goal->goal_type)" required />
@@ -35,7 +29,7 @@
 
                     <div>
                         <x-input-label for="status" value="Status" />
-                        <select id="status" name="status" class="mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-slate-100 focus:border-ankhor-400 focus:ring-ankhor-400">
+                        <select id="status" name="status" class="nhealth-select">
                             @foreach (['draft', 'active', 'paused', 'completed', 'archived'] as $status)
                                 <option value="{{ $status }}" @selected(old('status', $goal->status ?? 'active') === $status)>{{ ucfirst($status) }}</option>
                             @endforeach
@@ -45,7 +39,7 @@
 
                     <div>
                         <x-input-label for="direction" value="Direction" />
-                        <select id="direction" name="direction" class="mt-2 block w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-slate-100 focus:border-ankhor-400 focus:ring-ankhor-400">
+                        <select id="direction" name="direction" class="nhealth-select">
                             <option value="">None</option>
                             @foreach (['increase', 'decrease', 'maintain'] as $direction)
                                 <option value="{{ $direction }}" @selected(old('direction', $goal->direction) === $direction)>{{ ucfirst($direction) }}</option>
@@ -86,12 +80,10 @@
                 </div>
 
                 <div class="flex items-center justify-between gap-3">
-                    <a href="{{ route('nhealth.goals.index') }}" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-100 transition hover:bg-white/10">
-                        Back
-                    </a>
+                    <a href="{{ route('nhealth.goals.index') }}" class="nhealth-ghost-link">Back</a>
                     <x-primary-button>Create goal</x-primary-button>
                 </div>
             </form>
-        </div>
+        </x-nhealth.section>
     </div>
 </x-app-layout>
