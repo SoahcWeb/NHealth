@@ -167,6 +167,33 @@
                         <p class="mt-2 text-sm text-slate-400">Difference between your latest and previous usable weight points.</p>
                     </div>
                 </div>
+
+                <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/60 p-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-sm font-medium text-white">Weight trend</p>
+                            <p class="mt-1 text-sm text-slate-400">Last 30 private weight entries.</p>
+                        </div>
+                        <a href="{{ route('nhealth.weight.index') }}" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-100 transition hover:bg-white/10">
+                            View all
+                        </a>
+                    </div>
+
+                    @if (count($weightChart['labels']) > 1)
+                        <div class="mt-4 h-72">
+                            <canvas
+                                data-weight-chart
+                                data-labels='@json($weightChart['labels'])'
+                                data-values='@json($weightChart['weights'])'
+                                class="h-full w-full"
+                            ></canvas>
+                        </div>
+                    @else
+                        <div class="mt-4 flex h-72 items-center justify-center rounded-2xl border border-dashed border-white/10 bg-white/5 text-center text-sm text-slate-400">
+                            Add at least two weight entries to unlock the evolution chart.
+                        </div>
+                    @endif
+                </div>
             </article>
 
             <article class="panel">

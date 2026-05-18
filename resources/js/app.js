@@ -26,9 +26,9 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-const chartElement = document.querySelector('[data-weight-chart]');
+const weightChartElements = document.querySelectorAll('[data-weight-chart]');
 
-if (chartElement) {
+weightChartElements.forEach((chartElement) => {
     const labels = JSON.parse(chartElement.dataset.labels ?? '[]');
     const values = JSON.parse(chartElement.dataset.values ?? '[]');
 
@@ -93,4 +93,4 @@ if (chartElement) {
             },
         });
     }
-}
+});

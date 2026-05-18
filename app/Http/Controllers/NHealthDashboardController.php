@@ -23,6 +23,12 @@ class NHealthDashboardController extends Controller
         $activeGoal = $user->activeGoals()->latest('created_at')->first();
         $latestWeightEntry = $user->weightEntries()->latest('recorded_on')->first();
         $recentWeightEntries = $user->weightEntries()->latest('recorded_on')->take(2)->get();
+        $chartWeightEntries = $user->weightEntries()
+            ->latest('recorded_on')
+            ->take(30)
+            ->get()
+            ->reverse()
+            ->values();
         $latestCheckIn = $user->checkIns()->latest('recorded_on')->first();
         $allCheckIns = $user->checkIns()->latest('recorded_on')->get();
 
@@ -37,6 +43,14 @@ class NHealthDashboardController extends Controller
             'activeGoal' => $activeGoal,
             'latestWeightEntry' => $latestWeightEntry,
             'latestCheckIn' => $latestCheckIn,
+            'weightChart' => [
+                'labels' => $chartWeightEntries
+                    ->map(static fn (WeightEntry $weightEntry): string => $weightEntry->recorded_on->format('d M'))
+                    ->all(),
+                'weights' => $chartWeightEntries
+                    ->map(static fn (WeightEntry $weightEntry): float => (float) $weightEntry->weight_kg)
+                    ->all(),
+            ],
             'stats' => [
                 'current_weight_kg' => $currentWeightKg,
                 'recent_weight_change_kg' => $this->calculateRecentWeightChange($recentWeightEntries, $latestCheckIn),
