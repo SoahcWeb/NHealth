@@ -28,15 +28,49 @@
             </article>
 
             <article class="stat-card">
-                <p class="stat-label">Check-ins</p>
-                <p class="stat-value">{{ $stats['total_check_ins'] }}</p>
-                <p class="stat-hint">Daily journal entries in your private history.</p>
+                <p class="stat-label">Check-ins this month</p>
+                <p class="stat-value">{{ $stats['check_ins_this_month'] }}</p>
+                <p class="stat-hint">{{ $stats['total_check_ins'] }} total daily journal entries.</p>
             </article>
 
             <article class="stat-card">
                 <p class="stat-label">Current streak</p>
                 <p class="stat-value">{{ $stats['current_streak'] }} days</p>
                 <p class="stat-hint">Consecutive check-in days from your latest entry.</p>
+            </article>
+        </section>
+
+        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <article class="rounded-[2rem] border border-ankhor-400/20 bg-ankhor-500/10 p-5 shadow-xl shadow-black/20 backdrop-blur">
+                <p class="stat-label">Sleep average</p>
+                <p class="stat-value">
+                    {{ $stats['average_sleep_hours_7d'] !== null ? number_format($stats['average_sleep_hours_7d'], 2) . ' h' : '—' }}
+                </p>
+                <p class="stat-hint">Average sleep over the last 7 days.</p>
+            </article>
+
+            <article class="rounded-[2rem] border border-nethra-400/20 bg-nethra-500/10 p-5 shadow-xl shadow-black/20 backdrop-blur">
+                <p class="stat-label">Weight 7-day change</p>
+                <p class="stat-value">
+                    @if ($stats['weight_change_7d_kg'] !== null)
+                        {{ $stats['weight_change_7d_kg'] > 0 ? '+' : '' }}{{ number_format($stats['weight_change_7d_kg'], 2) }} kg
+                    @else
+                        —
+                    @endif
+                </p>
+                <p class="stat-hint">Difference between the oldest and latest entry in the last 7 days.</p>
+            </article>
+
+            <article class="stat-card">
+                <p class="stat-label">Latest energy</p>
+                <p class="stat-value">{{ $stats['latest_energy_level'] ?? '—' }}</p>
+                <p class="stat-hint">Most recent energy level from your journal.</p>
+            </article>
+
+            <article class="stat-card">
+                <p class="stat-label">Latest mood</p>
+                <p class="stat-value">{{ $stats['latest_mood_level'] ?? '—' }}</p>
+                <p class="stat-hint">Most recent mood level from your journal.</p>
             </article>
         </section>
 
@@ -96,28 +130,37 @@
 
                 @if ($activeGoal)
                     <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">{{ $activeGoal->goal_type }}</p>
-                        <p class="mt-3 text-2xl font-semibold text-white">{{ $activeGoal->title }}</p>
-                        <p class="mt-2 text-sm text-slate-300">{{ $activeGoal->description ?: 'No description provided.' }}</p>
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-[0.3em] text-slate-400">{{ $activeGoal->goal_type }}</p>
+                                <p class="mt-3 text-2xl font-semibold text-white">{{ $activeGoal->title }}</p>
+                                <p class="mt-2 text-sm text-slate-300">{{ $activeGoal->description ?: 'No description provided.' }}</p>
+                            </div>
+                            <div class="rounded-full border border-white/10 bg-slate-950/70 px-3 py-1 text-xs uppercase tracking-[0.25em] text-slate-300">
+                                {{ $activeGoal->status }}
+                            </div>
+                        </div>
 
                         <div class="mt-5 grid gap-4 md:grid-cols-2">
-                            <div>
+                            <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
                                 <p class="text-sm text-slate-400">Target</p>
                                 <p class="mt-2 text-lg font-semibold text-white">
                                     {{ $activeGoal->target_value ? number_format((float) $activeGoal->target_value, 2) . ' ' . $activeGoal->unit : '—' }}
                                 </p>
                             </div>
-                            <div>
+                            <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
                                 <p class="text-sm text-slate-400">Target date</p>
                                 <p class="mt-2 text-lg font-semibold text-white">{{ optional($activeGoal->target_date)->format('d M Y') ?: '—' }}</p>
                             </div>
                         </div>
 
-                        <div class="mt-6 rounded-2xl border border-ankhor-400/20 bg-slate-950/50 p-4">
+                        <div class="mt-4 rounded-2xl border border-ankhor-400/20 bg-slate-950/50 p-4">
                             <div class="flex items-center justify-between gap-3">
                                 <p class="text-sm font-medium text-white">Estimated progress</p>
                                 @if ($progress['is_estimable'])
                                     <span class="text-sm text-nethra-200">{{ $progress['percentage'] }}%</span>
+                                @else
+                                    <span class="text-sm text-slate-400">Pending</span>
                                 @endif
                             </div>
 
@@ -125,7 +168,10 @@
                                 <div class="mt-3 h-3 overflow-hidden rounded-full bg-white/10">
                                     <div class="h-full rounded-full bg-gradient-to-r from-nethra-400 to-ankhor-400" style="width: {{ $progress['percentage'] }}%"></div>
                                 </div>
-                                <p class="mt-3 text-sm text-slate-300">{{ $progress['remaining_label'] }}</p>
+                                <div class="mt-3 flex items-center justify-between gap-3 text-sm">
+                                    <span class="text-slate-300">{{ $progress['remaining_label'] }}</span>
+                                    <span class="text-slate-400">{{ $stats['current_weight_kg'] !== null ? number_format($stats['current_weight_kg'], 2) . ' kg now' : 'No current weight' }}</span>
+                                </div>
                             @else
                                 <p class="mt-3 text-sm text-slate-400">{{ $progress['message'] }}</p>
                             @endif
@@ -197,8 +243,8 @@
             </article>
 
             <article class="panel">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Latest check-in</p>
-                <h3 class="mt-2 text-xl font-semibold text-white">Daily journal snapshot</h3>
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Daily rhythm</p>
+                <h3 class="mt-2 text-xl font-semibold text-white">Latest journal and habits</h3>
 
                 @if ($latestCheckIn)
                     <div class="mt-6 grid gap-4 md:grid-cols-2">
@@ -220,6 +266,17 @@
                         </div>
                     </div>
 
+                    <div class="mt-4 grid gap-4 md:grid-cols-2">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <p class="text-sm text-slate-400">Water intake</p>
+                            <p class="mt-2 text-lg font-semibold text-white">{{ $latestCheckIn->water_intake_liters ? number_format((float) $latestCheckIn->water_intake_liters, 1) . ' L' : '—' }}</p>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <p class="text-sm text-slate-400">Steps</p>
+                            <p class="mt-2 text-lg font-semibold text-white">{{ $latestCheckIn->steps ? number_format($latestCheckIn->steps) : '—' }}</p>
+                        </div>
+                    </div>
+
                     <div class="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
                         <p class="text-sm text-slate-400">Notes</p>
                         <p class="mt-2 text-sm leading-6 text-slate-200">{{ $latestCheckIn->notes ?: 'No notes saved for the latest check-in.' }}</p>
@@ -229,6 +286,28 @@
                         No check-in yet. Start the daily journal to populate this cockpit section.
                     </div>
                 @endif
+
+                <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/60 p-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-sm font-medium text-white">Habit summary</p>
+                            <p class="mt-1 text-sm text-slate-400">Quick 7-day health behavior snapshot.</p>
+                        </div>
+                        <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.25em] text-slate-300">
+                            7 days
+                        </span>
+                    </div>
+
+                    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                        @foreach ($habitSummary as $item)
+                            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">{{ $item['label'] }}</p>
+                                <p class="mt-2 text-2xl font-semibold text-white">{{ $item['value'] }}</p>
+                                <p class="mt-2 text-sm text-slate-400">{{ $item['hint'] }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </article>
         </section>
 
