@@ -4,6 +4,7 @@ use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HealthProfileController;
+use App\Http\Controllers\NHealthDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WeightEntryController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/check-ins', [CheckInController::class, 'store'])->name('check-ins.store');
 
     Route::prefix('nhealth')->name('nhealth.')->group(function () {
+        Route::get('/dashboard', [NHealthDashboardController::class, 'index'])->name('dashboard');
+
         Route::get('/profile', [HealthProfileController::class, 'edit'])->name('profile.edit');
         Route::match(['put', 'patch'], '/profile', [HealthProfileController::class, 'update'])->name('profile.update');
 
