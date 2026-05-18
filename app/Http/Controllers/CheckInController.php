@@ -15,9 +15,14 @@ class CheckInController extends Controller
      */
     public function index(Request $request): View
     {
+        $todayCheckIn = $request->user()->checkIns()
+            ->whereDate('recorded_on', now()->toDateString())
+            ->first();
+
         return view('check-ins.index', [
             'checkIns' => $request->user()->checkIns()->latest('recorded_on')->simplePaginate(10),
             'defaultRecordedOn' => now()->toDateString(),
+            'todayCheckIn' => $todayCheckIn,
         ]);
     }
 
@@ -41,7 +46,12 @@ class CheckInController extends Controller
 
         return redirect()
             ->route('check-ins.index')
-            ->with('status', $checkIn->wasRecentlyCreated ? 'Check-in saved.' : 'Check-in updated for that date.');
+            ->with(
+                'status',
+                $checkIn->wasRecentlyCreated
+                    ? 'Daily check-in saved for ' . $checkIn->recorded_on->format('d M Y') . '.'
+                    : 'Daily check-in updated for ' . $checkIn->recorded_on->format('d M Y') . '.',
+            );
     }
 
     /**
