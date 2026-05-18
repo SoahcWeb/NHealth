@@ -56,9 +56,12 @@ class CheckInController extends Controller
             'weight_kg' => $request->validated('weight_kg'),
             'sleep_hours' => $request->validated('sleep_hours'),
             'steps' => $request->validated('steps'),
+            'water_intake_liters' => $request->validated('water_intake_liters'),
             'energy_level' => $request->validated('energy_level'),
             'mood_level' => $request->validated('mood_level'),
+            'stress_level' => $request->validated('stress_level'),
             'notes' => $request->validated('notes'),
+            'metadata' => $request->validated('metadata'),
         ];
     }
 }
