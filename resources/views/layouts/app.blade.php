@@ -27,6 +27,10 @@
                 </header>
             @endisset
 
+            @if (request()->routeIs('nhealth.*') || request()->routeIs('check-ins.*'))
+                @include('nhealth.partials.navigation')
+            @endif
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}
