@@ -69,6 +69,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's private internal health reminders.
+     */
+    public function healthReminders(): HasMany
+    {
+        return $this->hasMany(HealthReminder::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

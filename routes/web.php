@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FavoriteModuleController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HealthProfileController;
+use App\Http\Controllers\HealthReminderController;
 use App\Http\Controllers\NHealthDashboardController;
 use App\Http\Controllers\NHealthExportController;
 use App\Http\Controllers\ProfileController;
@@ -27,6 +28,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/profile', [HealthProfileController::class, 'edit'])->name('profile.edit');
         Route::match(['put', 'patch'], '/profile', [HealthProfileController::class, 'update'])->name('profile.update');
+
+        Route::get('/reminders', [HealthReminderController::class, 'index'])->name('reminders.index');
+        Route::match(['put', 'patch'], '/reminders', [HealthReminderController::class, 'update'])->name('reminders.update');
 
         Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
         Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');

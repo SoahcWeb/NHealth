@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\CheckIn;
+use App\Models\HealthReminder;
 use App\Models\User;
 use App\Models\WeightEntry;
 use Illuminate\Support\Collection;
@@ -42,6 +43,10 @@ class DashboardStatsService
             ->whereDate('recorded_on', '>=', now()->subDays(6)->toDateString())
             ->latest('recorded_on')
             ->get();
+        $activeReminders = $user->healthReminders()
+            ->where('is_enabled', true)
+            ->orderBy('reminder_key')
+            ->get();
 
         $currentWeightKg = $latestWeightEntry?->weight_kg !== null
             ? (float) $latestWeightEntry->weight_kg
@@ -71,6 +76,7 @@ class DashboardStatsService
             'progress' => $this->goalProgressService->build($activeGoal, $currentWeightKg),
             'habitSummary' => $this->buildHabitSummary($recentCheckIns),
             'badges' => $this->badgeService->build($user),
+            'activeReminders' => $this->buildActiveReminders($activeReminders),
         ];
     }
 
@@ -235,5 +241,26 @@ class DashboardStatsService
                 : number_format((float) $average, 1),
             'hint' => $hint,
         ];
+    }
+
+    /**
+     * Prepare enabled reminders for cockpit rendering without leaking extra model logic into Blade.
+     *
+     * @param  Collection<int, HealthReminder>  $reminders
+     * @return array<int, array<string, string>>
+     */
+    private function buildActiveReminders(Collection $reminders): array
+    {
+        return $reminders
+            ->map(static function (HealthReminder $reminder): array {
+                $definition = HealthReminder::definitionFor($reminder->reminder_key);
+
+                return [
+                    'key' => $reminder->reminder_key,
+                    'title' => $definition['title'] ?? $reminder->reminder_name,
+                    'description' => $definition['description'] ?? 'Internal reminder enabled in your private cockpit.',
+                ];
+            })
+            ->all();
     }
 }
