@@ -112,4 +112,16 @@
     .nhealth-chart-frame {
         @apply rounded-3xl border border-white/10 bg-slate-950/60 p-4;
     }
+
+    .nhealth-badge {
+        @apply rounded-3xl border p-5 shadow-xl shadow-black/10 transition duration-200;
+    }
+
+    .nhealth-badge-unlocked {
+        @apply border-nethra-400/25 bg-gradient-to-br from-nethra-500/15 to-ankhor-500/10;
+    }
+
+    .nhealth-badge-locked {
+        @apply border-white/10 bg-white/5;
+    }
 }

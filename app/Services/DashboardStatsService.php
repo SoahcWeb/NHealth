@@ -11,6 +11,7 @@ class DashboardStatsService
 {
     public function __construct(
         private readonly GoalProgressService $goalProgressService,
+        private readonly BadgeService $badgeService,
     ) {
     }
 
@@ -69,6 +70,7 @@ class DashboardStatsService
             ],
             'progress' => $this->goalProgressService->build($activeGoal, $currentWeightKg),
             'habitSummary' => $this->buildHabitSummary($recentCheckIns),
+            'badges' => $this->badgeService->build($user),
         ];
     }
 
