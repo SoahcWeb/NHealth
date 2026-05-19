@@ -271,7 +271,10 @@ class NHealthModuleTest extends TestCase
      */
     private function createGoal(User $user, array $attributes = []): Goal
     {
-        return $user->goals()->create(array_merge([
+        return Goal::factory()
+            ->for($user)
+            ->active()
+            ->create(array_merge([
             'title' => 'Default goal',
             'description' => 'Default goal description.',
             'goal_type' => 'weight',
@@ -290,7 +293,9 @@ class NHealthModuleTest extends TestCase
      */
     private function createWeightEntry(User $user, array $attributes = []): WeightEntry
     {
-        return $user->weightEntries()->create(array_merge([
+        return WeightEntry::factory()
+            ->for($user)
+            ->create(array_merge([
             'recorded_on' => now()->toDateString(),
             'weight_kg' => 80.0,
             'source' => 'manual',
@@ -303,7 +308,9 @@ class NHealthModuleTest extends TestCase
      */
     private function createCheckIn(User $user, array $attributes = []): CheckIn
     {
-        return $user->checkIns()->create(array_merge([
+        return CheckIn::factory()
+            ->for($user)
+            ->create(array_merge([
             'recorded_on' => now()->toDateString(),
             'sleep_hours' => 7.0,
             'energy_level' => 7,
