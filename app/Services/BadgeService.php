@@ -31,7 +31,7 @@ class BadgeService
             $this->buildCountBadge(
                 key: 'first_check_in',
                 title: 'Premier check-in',
-                description: 'Record your first private daily journal entry.',
+                description: 'Enregistrez votre première entrée de journal quotidien privé.',
                 currentCount: $checkIns->count(),
                 targetCount: 1,
                 unitLabel: 'check-ins',
@@ -40,37 +40,37 @@ class BadgeService
             $this->buildCountBadge(
                 key: 'journal_7_days',
                 title: '7 jours de journal',
-                description: 'Log 7 private journal days to build early consistency.',
+                description: 'Enregistrez 7 jours de journal privé pour installer une première régularité.',
                 currentCount: $checkIns->count(),
                 targetCount: 7,
-                unitLabel: 'journal days',
+                unitLabel: 'jours de journal',
                 achievedAt: $this->checkInAchievedAt($checkIns, 7),
             ),
             $this->buildCountBadge(
                 key: 'journal_30_days',
                 title: '30 jours de journal',
-                description: 'Reach 30 logged journal days in your health cockpit.',
+                description: 'Atteignez 30 jours de journal enregistrés dans votre cockpit santé.',
                 currentCount: $checkIns->count(),
                 targetCount: 30,
-                unitLabel: 'journal days',
+                unitLabel: 'jours de journal',
                 achievedAt: $this->checkInAchievedAt($checkIns, 30),
             ),
             $this->buildCountBadge(
                 key: 'first_weight_entry',
                 title: 'Première entrée de poids',
-                description: 'Capture your first dedicated weight measurement.',
+                description: 'Enregistrez votre première mesure de poids dédiée.',
                 currentCount: $weightEntries->count(),
                 targetCount: 1,
-                unitLabel: 'weight entries',
+                unitLabel: 'entrées de poids',
                 achievedAt: $this->weightEntryAchievedAt($weightEntries, 1),
             ),
             $this->buildCountBadge(
                 key: 'weight_10_entries',
                 title: '10 entrées de poids',
-                description: 'Build a stronger trend with 10 dedicated weigh-ins.',
+                description: 'Construisez une tendance plus solide avec 10 pesées dédiées.',
                 currentCount: $weightEntries->count(),
                 targetCount: 10,
-                unitLabel: 'weight entries',
+                unitLabel: 'entrées de poids',
                 achievedAt: $this->weightEntryAchievedAt($weightEntries, 10),
             ),
             $this->buildGoalBadge($activeGoals),
@@ -103,11 +103,11 @@ class BadgeService
             'title' => $title,
             'description' => $description,
             'is_unlocked' => $isUnlocked,
-            'status_label' => $isUnlocked ? 'Unlocked' : 'Locked',
+            'status_label' => $isUnlocked ? 'Débloqué' : 'Verrouillé',
             'progress_label' => $progressCount . ' / ' . $targetCount . ' ' . $unitLabel,
             'achieved_label' => $isUnlocked && $achievedAt !== null
-                ? 'Unlocked on ' . $achievedAt
-                : 'Keep going to unlock this badge.',
+                ? 'Débloqué le ' . $achievedAt
+                : 'Continuez pour débloquer ce badge.',
         ];
     }
 
@@ -123,13 +123,13 @@ class BadgeService
         return [
             'key' => 'active_goal_created',
             'title' => 'Objectif actif créé',
-            'description' => 'Create an active transformation goal in NHealth.',
+            'description' => 'Créez un objectif actif de transformation dans NHealth.',
             'is_unlocked' => $isUnlocked,
-            'status_label' => $isUnlocked ? 'Unlocked' : 'Locked',
-            'progress_label' => $isUnlocked ? '1 / 1 active goal' : '0 / 1 active goal',
+            'status_label' => $isUnlocked ? 'Débloqué' : 'Verrouillé',
+            'progress_label' => $isUnlocked ? '1 / 1 objectif actif' : '0 / 1 objectif actif',
             'achieved_label' => $isUnlocked
-                ? 'Unlocked on ' . $activeGoal->created_at->format('d M Y')
-                : 'Create an active goal to unlock this badge.',
+                ? 'Débloqué le ' . $activeGoal->created_at->translatedFormat('d M Y')
+                : 'Créez un objectif actif pour débloquer ce badge.',
         ];
     }
 
@@ -140,7 +140,7 @@ class BadgeService
     {
         $entry = $checkIns->get($targetCount - 1);
 
-        return $entry?->recorded_on?->format('d M Y');
+        return $entry?->recorded_on?->translatedFormat('d M Y');
     }
 
     /**
@@ -150,6 +150,6 @@ class BadgeService
     {
         $entry = $weightEntries->get($targetCount - 1);
 
-        return $entry?->recorded_on?->format('d M Y');
+        return $entry?->recorded_on?->translatedFormat('d M Y');
     }
 }

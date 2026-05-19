@@ -37,8 +37,8 @@ class FavoriteModuleController extends Controller
             ->with(
                 'status',
                 $favoriteModule->is_active
-                    ? FavoriteModule::NHEALTH_NAME . ' activated. Your health data stays untouched.'
-                    : FavoriteModule::NHEALTH_NAME . ' deactivated. Your health data stays untouched.',
+                    ? FavoriteModule::NHEALTH_NAME . ' activé. Vos données de santé restent intactes.'
+                    : FavoriteModule::NHEALTH_NAME . ' désactivé. Vos données de santé restent intactes.',
             );
     }
 }

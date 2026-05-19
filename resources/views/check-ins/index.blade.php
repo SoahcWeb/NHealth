@@ -1,22 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col gap-2">
-            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Daily journal</p>
-            <h1 class="text-2xl font-semibold text-white sm:text-3xl">Daily check-ins</h1>
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Journal quotidien</p>
+            <h1 class="text-2xl font-semibold text-white sm:text-3xl">Check-ins quotidiens</h1>
             <p class="max-w-3xl text-sm text-slate-300">
-                One private journal entry per day, attached only to your account and reusable for today's update.
+                Une entrée de journal privée par jour, liée uniquement à votre compte et réutilisable pour la mise à jour du jour.
             </p>
         </div>
     </x-slot>
 
     <div class="nhealth-shell">
         @if (session('status'))
-            <x-nhealth.flash :message="session('status')" title="Journal updated" />
+            <x-nhealth.flash :message="session('status')" title="Journal mis à jour" />
         @endif
 
         @if ($errors->any())
-            <x-nhealth.alert type="error" title="Validation issue">
-                <p class="font-medium">Please correct the highlighted fields and try again.</p>
+            <x-nhealth.alert type="error" title="Problème de validation">
+                <p class="font-medium">Merci de corriger les champs en surbrillance puis de réessayer.</p>
                 <ul class="mt-2 list-disc space-y-1 pl-5 text-rose-100/90">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -30,18 +30,18 @@
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">
-                            {{ $todayCheckIn ? 'Today already logged' : 'Today not logged yet' }}
+                            {{ $todayCheckIn ? 'Aujourd’hui déjà enregistré' : 'Aujourd’hui pas encore enregistré' }}
                         </p>
                         <h2 class="mt-2 text-2xl font-semibold text-white">
-                            {{ $todayCheckIn ? "Update today's journal" : "Capture today's journal" }}
+                            {{ $todayCheckIn ? "Mettre à jour le journal d’aujourd’hui" : "Enregistrer le journal d’aujourd’hui" }}
                         </h2>
                         <p class="mt-2 text-sm text-slate-300">
-                            One entry per date. Saving an existing date updates that journal entry instead of creating a duplicate.
+                            Une entrée par date. Enregistrer une date existante met à jour cette entrée du journal au lieu de créer un doublon.
                         </p>
                     </div>
 
                     <div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
-                        One entry per date
+                        Une entrée par date
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="weight_kg" value="Weight (kg)" />
+                            <x-input-label for="weight_kg" value="Poids (kg)" />
                             <x-text-input
                                 id="weight_kg"
                                 name="weight_kg"
@@ -77,7 +77,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="sleep_hours" value="Sleep (hours)" />
+                            <x-input-label for="sleep_hours" value="Sommeil (heures)" />
                             <x-text-input
                                 id="sleep_hours"
                                 name="sleep_hours"
@@ -92,7 +92,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="steps" value="Steps" />
+                            <x-input-label for="steps" value="Pas" />
                             <x-text-input
                                 id="steps"
                                 name="steps"
@@ -106,7 +106,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="energy_level" value="Energy level (1-10)" />
+                            <x-input-label for="energy_level" value="Énergie (1-10)" />
                             <x-text-input
                                 id="energy_level"
                                 name="energy_level"
@@ -120,7 +120,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="mood_level" value="Mood level (1-10)" />
+                            <x-input-label for="mood_level" value="Humeur (1-10)" />
                             <x-text-input
                                 id="mood_level"
                                 name="mood_level"
@@ -134,7 +134,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="stress_level" value="Stress level (1-10)" />
+                            <x-input-label for="stress_level" value="Stress (1-10)" />
                             <x-text-input
                                 id="stress_level"
                                 name="stress_level"
@@ -148,7 +148,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="water_intake_liters" value="Water (liters)" />
+                            <x-input-label for="water_intake_liters" value="Eau (litres)" />
                             <x-text-input
                                 id="water_intake_liters"
                                 name="water_intake_liters"
@@ -165,65 +165,65 @@
 
                     <div>
                         <x-input-label for="notes" value="Notes" />
-                        <textarea id="notes" name="notes" rows="4" class="nhealth-textarea" placeholder="Workout, meals, recovery, stress, wins...">{{ old('notes', $todayCheckIn?->notes) }}</textarea>
+                        <textarea id="notes" name="notes" rows="4" class="nhealth-textarea" placeholder="Entraînement, repas, récupération, stress, victoires...">{{ old('notes', $todayCheckIn?->notes) }}</textarea>
                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                     </div>
 
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <p class="text-sm text-slate-400">
-                            Your entry stays private to your account and can be updated later by selecting the same date.
+                            Votre entrée reste privée sur votre compte et peut être mise à jour plus tard en sélectionnant la même date.
                         </p>
                         <x-primary-button>
-                            {{ $todayCheckIn ? 'Update daily check-in' : 'Save daily check-in' }}
+                            {{ $todayCheckIn ? 'Mettre à jour le check-in' : 'Enregistrer le check-in' }}
                         </x-primary-button>
                     </div>
                 </form>
             </div>
 
             <div class="rounded-3xl border border-white/10 bg-slate-900/75 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Today at a glance</p>
-                <h2 class="mt-2 text-2xl font-semibold text-white">Journal status</h2>
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Vue du jour</p>
+                <h2 class="mt-2 text-2xl font-semibold text-white">Statut du journal</h2>
                 <p class="mt-2 text-sm text-slate-300">
-                    Keep a simple private snapshot of how the day feels and evolves.
+                    Gardez un aperçu privé et simple de la façon dont la journée évolue.
                 </p>
 
                 <div class="mt-6 grid gap-4">
                     <div class="rounded-2xl border border-ankhor-400/20 bg-ankhor-500/10 p-4">
-                        <p class="text-xs uppercase tracking-[0.25em] text-ankhor-300">Status</p>
+                        <p class="text-xs uppercase tracking-[0.25em] text-ankhor-300">Statut</p>
                         <p class="mt-2 text-lg font-semibold text-white">
-                            {{ $todayCheckIn ? 'Today is already recorded' : 'No entry for today yet' }}
+                            {{ $todayCheckIn ? 'Aujourd’hui est déjà enregistré' : 'Aucune entrée pour aujourd’hui' }}
                         </p>
                         <p class="mt-2 text-sm text-slate-300">
-                            {{ $todayCheckIn ? "The form is prefilled with today's data so you can update it quickly." : "Create today's entry to keep your streak and context up to date." }}
-                        </p>
-                    </div>
-
-                    <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
-                        <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Privacy</p>
-                        <p class="mt-2 text-lg font-semibold text-white">User isolated</p>
-                        <p class="mt-2 text-sm text-slate-300">
-                            Every check-in belongs to your account only.
+                            {{ $todayCheckIn ? "Le formulaire est prérempli avec les données d’aujourd’hui pour une mise à jour rapide." : "Créez l’entrée d’aujourd’hui pour garder votre série et votre contexte à jour." }}
                         </p>
                     </div>
 
                     <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
-                        <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Tracked today</p>
-                        <p class="mt-2 text-lg font-semibold text-white">8 daily signals</p>
+                        <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Confidentialité</p>
+                        <p class="mt-2 text-lg font-semibold text-white">Isolé par utilisateur</p>
                         <p class="mt-2 text-sm text-slate-300">
-                            Date, weight, sleep, steps, energy, mood, stress, water and notes.
+                            Chaque check-in appartient uniquement à votre compte.
+                        </p>
+                    </div>
+
+                    <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+                        <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Suivi du jour</p>
+                        <p class="mt-2 text-lg font-semibold text-white">8 signaux quotidiens</p>
+                        <p class="mt-2 text-sm text-slate-300">
+                            Date, poids, sommeil, pas, énergie, humeur, stress, eau et notes.
                         </p>
                     </div>
 
                     @if ($todayCheckIn)
                         <div class="rounded-2xl border border-nethra-400/20 bg-nethra-500/10 p-4">
-                            <p class="text-xs uppercase tracking-[0.25em] text-nethra-100">Current snapshot for today</p>
+                            <p class="text-xs uppercase tracking-[0.25em] text-nethra-100">Instantané actuel du jour</p>
                             <div class="mt-3 grid grid-cols-2 gap-3 text-sm text-slate-200">
-                                <p>Weight: {{ $todayCheckIn->weight_kg ? number_format((float) $todayCheckIn->weight_kg, 2) . ' kg' : '—' }}</p>
-                                <p>Sleep: {{ $todayCheckIn->sleep_hours ? number_format((float) $todayCheckIn->sleep_hours, 2) . ' h' : '—' }}</p>
-                                <p>Energy: {{ $todayCheckIn->energy_level ?? '—' }}</p>
-                                <p>Mood: {{ $todayCheckIn->mood_level ?? '—' }}</p>
-                                <p>Stress: {{ $todayCheckIn->stress_level ?? '—' }}</p>
-                                <p>Water: {{ $todayCheckIn->water_intake_liters ? number_format((float) $todayCheckIn->water_intake_liters, 1) . ' L' : '—' }}</p>
+                                <p>Poids : {{ $todayCheckIn->weight_kg ? number_format((float) $todayCheckIn->weight_kg, 2) . ' kg' : '—' }}</p>
+                                <p>Sommeil : {{ $todayCheckIn->sleep_hours ? number_format((float) $todayCheckIn->sleep_hours, 2) . ' h' : '—' }}</p>
+                                <p>Énergie : {{ $todayCheckIn->energy_level ?? '—' }}</p>
+                                <p>Humeur : {{ $todayCheckIn->mood_level ?? '—' }}</p>
+                                <p>Stress : {{ $todayCheckIn->stress_level ?? '—' }}</p>
+                                <p>Eau : {{ $todayCheckIn->water_intake_liters ? number_format((float) $todayCheckIn->water_intake_liters, 1) . ' L' : '—' }}</p>
                             </div>
                         </div>
                     @endif
@@ -234,10 +234,10 @@
         <section class="rounded-3xl border border-white/10 bg-slate-900/75 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">History</p>
-                    <h2 class="mt-2 text-2xl font-semibold text-white">Recent journal entries</h2>
+                    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-nethra-300">Historique</p>
+                    <h2 class="mt-2 text-2xl font-semibold text-white">Entrées récentes du journal</h2>
                     <p class="mt-2 text-sm text-slate-300">
-                        Latest first, private to your account, one day per card.
+                        Les plus récentes d’abord, privées à votre compte, une journée par carte.
                     </p>
                 </div>
             </div>
@@ -247,41 +247,41 @@
                     <article class="rounded-3xl border border-white/10 bg-slate-950/60 p-5">
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                             <div>
-                                <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Entry date</p>
+                                <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Date de l’entrée</p>
                                 <h3 class="mt-2 text-xl font-semibold text-white">
-                                    {{ $checkIn->recorded_on->format('d M Y') }}
+                                    {{ $checkIn->recorded_on->translatedFormat('d M Y') }}
                                 </h3>
                             </div>
 
                             <div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
-                                {{ $checkIn->recorded_on->isToday() ? 'Today' : 'Journal entry' }}
+                                {{ $checkIn->recorded_on->isToday() ? 'Aujourd’hui' : 'Entrée du journal' }}
                             </div>
                         </div>
 
                         <div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                             <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Weight</p>
+                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Poids</p>
                                 <p class="mt-2 text-lg font-semibold text-white">
                                     {{ $checkIn->weight_kg ? number_format((float) $checkIn->weight_kg, 2) . ' kg' : '—' }}
                                 </p>
                             </div>
 
                             <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Sleep</p>
+                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Sommeil</p>
                                 <p class="mt-2 text-lg font-semibold text-white">
                                     {{ $checkIn->sleep_hours ? number_format((float) $checkIn->sleep_hours, 2) . ' h' : '—' }}
                                 </p>
                             </div>
 
                             <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Energy / Mood</p>
+                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Énergie / Humeur</p>
                                 <p class="mt-2 text-lg font-semibold text-white">
                                     {{ ($checkIn->energy_level ?? '—') . ' / ' . ($checkIn->mood_level ?? '—') }}
                                 </p>
                             </div>
 
                             <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Stress / Water</p>
+                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Stress / Eau</p>
                                 <p class="mt-2 text-lg font-semibold text-white">
                                     {{ ($checkIn->stress_level ?? '—') . ' / ' . ($checkIn->water_intake_liters ? number_format((float) $checkIn->water_intake_liters, 1) . ' L' : '—') }}
                                 </p>
@@ -290,7 +290,7 @@
 
                         <div class="mt-4 grid gap-4 md:grid-cols-[0.35fr,1fr]">
                             <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Steps</p>
+                                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Pas</p>
                                 <p class="mt-2 text-lg font-semibold text-white">
                                     {{ $checkIn->steps ? number_format($checkIn->steps) : '—' }}
                                 </p>
@@ -299,7 +299,7 @@
                             <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
                                 <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Notes</p>
                                 <p class="mt-2 whitespace-pre-line text-sm leading-6 text-slate-200">
-                                    {{ $checkIn->notes ?: 'No notes for this day.' }}
+                                    {{ $checkIn->notes ?: 'Aucune note pour cette journée.' }}
                                 </p>
                             </div>
                         </div>
@@ -307,7 +307,7 @@
                 @empty
                     <x-nhealth.empty-state
                         class="p-8 text-center"
-                        message="No check-ins yet. Add your first private journal entry to start building your daily history."
+                        message="Aucun check-in pour le moment. Ajoutez votre première entrée privée pour commencer votre historique quotidien."
                     />
                 @endforelse
             </div>

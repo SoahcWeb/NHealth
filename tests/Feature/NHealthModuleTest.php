@@ -44,7 +44,7 @@ class NHealthModuleTest extends TestCase
         $this->actingAs($user)
             ->get(route('nhealth.dashboard'))
             ->assertOk()
-            ->assertSee('Personal dashboard');
+            ->assertSee('Tableau de bord personnel');
     }
 
     public function test_user_can_create_and_update_their_health_profile(): void
@@ -204,7 +204,7 @@ class NHealthModuleTest extends TestCase
             ->get(route('nhealth.reminders.index'))
             ->assertOk()
             ->assertSee('Check-in quotidien')
-            ->assertSee('Pesee');
+            ->assertSee('Pesée');
     }
 
     public function test_user_can_view_their_monthly_statistics(): void
@@ -245,11 +245,11 @@ class NHealthModuleTest extends TestCase
         $this->actingAs($user)
             ->get(route('nhealth.statistics.index'))
             ->assertOk()
-            ->assertSee('Monthly statistics')
-            ->assertSee('Check-ins this month')
+            ->assertSee('Statistiques mensuelles')
+            ->assertSee('Check-ins ce mois-ci')
             ->assertSee('80.50 kg')
             ->assertSee('79.80 kg')
-            ->assertSee('Unlocked badges')
+            ->assertSee('Badges débloqués')
             ->assertSee('Premier check-in');
     }
 

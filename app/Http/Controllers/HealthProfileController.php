@@ -31,6 +31,6 @@ class HealthProfileController extends Controller
 
         return redirect()
             ->route('nhealth.profile.edit')
-            ->with('status', $healthProfile->wasRecentlyCreated ? 'Health profile created.' : 'Health profile updated.');
+            ->with('status', $healthProfile->wasRecentlyCreated ? 'Profil santé créé.' : 'Profil santé mis à jour.');
     }
 }

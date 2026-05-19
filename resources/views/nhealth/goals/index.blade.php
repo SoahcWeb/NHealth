@@ -1,39 +1,39 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-nhealth.page-header eyebrow="NHealth goals" title="Goals">
+        <x-nhealth.page-header eyebrow="Objectifs NHealth" title="Objectifs">
             <x-slot name="action">
-                <a href="{{ route('nhealth.goals.create') }}" class="nhealth-accent-link">Create goal</a>
+                <a href="{{ route('nhealth.goals.create') }}" class="nhealth-accent-link">Créer un objectif</a>
             </x-slot>
         </x-nhealth.page-header>
     </x-slot>
 
     <div class="nhealth-shell-content">
-        <x-nhealth.flash :message="session('status')" title="Goals updated" />
+        <x-nhealth.flash :message="session('status')" title="Objectifs mis à jour" />
 
         <section class="grid gap-4 md:grid-cols-3">
-            <x-nhealth.stat-card label="Total goals" :value="$goals->total()" hint="All goals visible in your private goal tracker." />
+            <x-nhealth.stat-card label="Total des objectifs" :value="$goals->total()" hint="Tous les objectifs visibles dans votre suivi privé." />
             <x-nhealth.stat-card
-                label="Active goals"
+                label="Objectifs actifs"
                 :value="$goals->getCollection()->where('status', 'active')->count()"
-                hint="Goals currently driving your transformation."
+                hint="Objectifs qui guident actuellement votre transformation."
                 variant="accent"
             />
             <x-nhealth.stat-card
-                label="Next step"
-                value="Refine focus"
-                hint="Keep one clear active goal and archive outdated targets."
+                label="Étape suivante"
+                value="Affiner le cap"
+                hint="Gardez un objectif actif clair et archivez les cibles dépassées."
                 variant="secondary"
             />
         </section>
 
-        <x-nhealth.section eyebrow="Library" title="Goal tracker">
+        <x-nhealth.section eyebrow="Bibliothèque" title="Suivi des objectifs">
             <x-nhealth.table>
                 <thead class="bg-white/5 text-left text-xs uppercase tracking-[0.3em] text-slate-400">
                     <tr>
-                        <th class="px-4 py-3">Title</th>
+                        <th class="px-4 py-3">Titre</th>
                         <th class="px-4 py-3">Type</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3">Target</th>
+                        <th class="px-4 py-3">Statut</th>
+                        <th class="px-4 py-3">Cible</th>
                         <th class="px-4 py-3">Date</th>
                         <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
@@ -56,14 +56,14 @@
                             <td class="px-4 py-4">
                                 {{ $goal->target_value ? number_format((float) $goal->target_value, 2) . ' ' . $goal->unit : '—' }}
                             </td>
-                            <td class="px-4 py-4">{{ optional($goal->target_date)->format('d M Y') ?: '—' }}</td>
+                            <td class="px-4 py-4">{{ optional($goal->target_date)?->translatedFormat('d M Y') ?: '—' }}</td>
                             <td class="px-4 py-4">
                                 <div class="flex justify-end gap-3">
-                                    <a href="{{ route('nhealth.goals.edit', $goal) }}" class="nhealth-ghost-link">Edit</a>
+                                    <a href="{{ route('nhealth.goals.edit', $goal) }}" class="nhealth-ghost-link">Modifier</a>
                                     <form method="POST" action="{{ route('nhealth.goals.destroy', $goal) }}">
                                         @csrf
                                         @method('DELETE')
-                                        <x-danger-button>Delete</x-danger-button>
+                                        <x-danger-button>Supprimer</x-danger-button>
                                     </form>
                                 </div>
                             </td>
@@ -71,7 +71,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-4 py-10 text-center text-slate-400">
-                                No goals yet. Create your first target to start structuring the transformation.
+                                Aucun objectif pour le moment. Créez votre première cible pour structurer votre transformation.
                             </td>
                         </tr>
                     @endforelse

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>NHealth Summary</title>
+    <title>Bilan NHealth</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -126,29 +126,29 @@
 <body>
     <div class="header">
         <p class="eyebrow">Nethra Health</p>
-        <h1 class="title">Personal progress summary</h1>
-        <p class="subtitle">{{ $user->name }} · Exported on {{ $exportedAt->format('d M Y H:i') }}</p>
+        <h1 class="title">Bilan personnel de progression</h1>
+        <p class="subtitle">{{ $user->name }} · Exporté le {{ $exportedAt->translatedFormat('d M Y H:i') }}</p>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Quick overview</h2>
+        <h2 class="section-title">Vue rapide</h2>
         <div class="grid">
             <div class="card card-half">
-                <p class="label">Latest weight</p>
+                <p class="label">Dernier poids</p>
                 <p class="value">
                     {{ $latestWeightEntry ? number_format((float) $latestWeightEntry->weight_kg, 2) . ' kg' : '—' }}
                 </p>
                 <p class="body-copy">
-                    {{ $latestWeightEntry ? 'Recorded on ' . $latestWeightEntry->recorded_on->format('d M Y') : 'No dedicated weight entry yet.' }}
+                    {{ $latestWeightEntry ? 'Enregistré le ' . $latestWeightEntry->recorded_on->translatedFormat('d M Y') : 'Aucune entrée de poids dédiée pour le moment.' }}
                 </p>
             </div>
 
             <div class="card card-half right">
-                <p class="label">Recent evolution</p>
+                <p class="label">Évolution récente</p>
                 <p class="value">
                     {{ $stats['weight_change_7d_kg'] !== null ? (($stats['weight_change_7d_kg'] > 0 ? '+' : '') . number_format($stats['weight_change_7d_kg'], 2) . ' kg') : '—' }}
                 </p>
-                <p class="body-copy">7-day movement based on recent dedicated weight entries.</p>
+                <p class="body-copy">Variation sur 7 jours basée sur les dernières entrées de poids dédiées.</p>
             </div>
         </div>
 
@@ -156,65 +156,65 @@
             <div class="card card-half">
                 <p class="label">Check-ins</p>
                 <p class="value">{{ $stats['total_check_ins'] }}</p>
-                <p class="body-copy">Private daily journal entries recorded so far.</p>
+                <p class="body-copy">Entrées privées du journal quotidien enregistrées jusqu’à présent.</p>
             </div>
 
             <div class="card card-half right">
-                <p class="label">Sleep average 7 days</p>
+                <p class="label">Sommeil moyen sur 7 jours</p>
                 <p class="value">{{ $stats['average_sleep_hours_7d'] !== null ? number_format($stats['average_sleep_hours_7d'], 2) . ' h' : '—' }}</p>
-                <p class="body-copy">Average sleep from the recent 7-day journal window.</p>
+                <p class="body-copy">Sommeil moyen calculé sur la fenêtre récente de 7 jours.</p>
             </div>
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Health profile</h2>
+        <h2 class="section-title">Profil santé</h2>
         <div class="card">
             @if ($healthProfile)
-                <p><strong>Date of birth:</strong> {{ optional($healthProfile->date_of_birth)->format('d M Y') ?: '—' }}</p>
-                <p><strong>Height:</strong> {{ $healthProfile->height_cm ? number_format((float) $healthProfile->height_cm, 2) . ' cm' : '—' }}</p>
-                <p><strong>Activity level:</strong> {{ $healthProfile->activity_level ?: '—' }}</p>
-                <p><strong>Unit system:</strong> {{ ucfirst($healthProfile->unit_system) }}</p>
-                <p><strong>Health notes:</strong> {{ $healthProfile->health_notes ?: 'No health notes saved yet.' }}</p>
+                <p><strong>Date de naissance :</strong> {{ optional($healthProfile->date_of_birth)?->translatedFormat('d M Y') ?: '—' }}</p>
+                <p><strong>Taille :</strong> {{ $healthProfile->height_cm ? number_format((float) $healthProfile->height_cm, 2) . ' cm' : '—' }}</p>
+                <p><strong>Niveau d’activité :</strong> {{ $healthProfile->activity_level ?: '—' }}</p>
+                <p><strong>Système d’unités :</strong> {{ ucfirst($healthProfile->unit_system) }}</p>
+                <p><strong>Notes de santé :</strong> {{ $healthProfile->health_notes ?: 'Aucune note de santé enregistrée pour le moment.' }}</p>
             @else
-                <p class="muted">No health profile has been filled yet.</p>
+                <p class="muted">Aucun profil santé n’a encore été rempli.</p>
             @endif
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Active goal</h2>
+        <h2 class="section-title">Objectif actif</h2>
         <div class="card">
             @if ($activeGoal)
-                <p><strong>Title:</strong> {{ $activeGoal->title }}</p>
-                <p><strong>Type:</strong> {{ $activeGoal->goal_type }}</p>
-                <p><strong>Status:</strong> {{ $activeGoal->status }}</p>
-                <p><strong>Target:</strong> {{ $activeGoal->target_value ? number_format((float) $activeGoal->target_value, 2) . ' ' . $activeGoal->unit : '—' }}</p>
-                <p><strong>Target date:</strong> {{ optional($activeGoal->target_date)->format('d M Y') ?: '—' }}</p>
-                <p><strong>Estimated progress:</strong> {{ $progress['is_estimable'] ? $progress['percentage'] . '%' : ($progress['message'] ?? 'Pending') }}</p>
-                <p><strong>Description:</strong> {{ $activeGoal->description ?: 'No description provided.' }}</p>
+                <p><strong>Titre :</strong> {{ $activeGoal->title }}</p>
+                <p><strong>Type :</strong> {{ $activeGoal->goal_type }}</p>
+                <p><strong>Statut :</strong> {{ $activeGoal->status }}</p>
+                <p><strong>Cible :</strong> {{ $activeGoal->target_value ? number_format((float) $activeGoal->target_value, 2) . ' ' . $activeGoal->unit : '—' }}</p>
+                <p><strong>Date cible :</strong> {{ optional($activeGoal->target_date)?->translatedFormat('d M Y') ?: '—' }}</p>
+                <p><strong>Progression estimée :</strong> {{ $progress['is_estimable'] ? $progress['percentage'] . '%' : ($progress['message'] ?? 'En attente') }}</p>
+                <p><strong>Description :</strong> {{ $activeGoal->description ?: 'Aucune description fournie.' }}</p>
             @else
-                <p class="muted">No active goal exists yet.</p>
+                <p class="muted">Aucun objectif actif pour le moment.</p>
             @endif
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Latest journal context</h2>
+        <h2 class="section-title">Dernier contexte du journal</h2>
         <div class="card">
             @if ($latestCheckIn)
-                <p><strong>Latest check-in date:</strong> {{ $latestCheckIn->recorded_on->format('d M Y') }}</p>
-                <p><strong>Energy / Mood:</strong> {{ ($latestCheckIn->energy_level ?? '—') . ' / ' . ($latestCheckIn->mood_level ?? '—') }}</p>
-                <p><strong>Stress:</strong> {{ $latestCheckIn->stress_level ?? '—' }}</p>
-                <p><strong>Notes:</strong> {{ $latestCheckIn->notes ?: 'No notes saved for the latest check-in.' }}</p>
+                <p><strong>Date du dernier check-in :</strong> {{ $latestCheckIn->recorded_on->translatedFormat('d M Y') }}</p>
+                <p><strong>Énergie / Humeur :</strong> {{ ($latestCheckIn->energy_level ?? '—') . ' / ' . ($latestCheckIn->mood_level ?? '—') }}</p>
+                <p><strong>Stress :</strong> {{ $latestCheckIn->stress_level ?? '—' }}</p>
+                <p><strong>Notes :</strong> {{ $latestCheckIn->notes ?: 'Aucune note enregistrée pour le dernier check-in.' }}</p>
             @else
-                <p class="muted">No daily journal entry exists yet.</p>
+                <p class="muted">Aucune entrée du journal quotidien pour le moment.</p>
             @endif
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Unlocked badges</h2>
+        <h2 class="section-title">Badges débloqués</h2>
         <div class="card">
             @if ($unlockedBadges->isNotEmpty())
                 <ul class="list">
@@ -225,7 +225,7 @@
                     @endforeach
                 </ul>
             @else
-                <p class="muted">No badges unlocked yet.</p>
+                <p class="muted">Aucun badge débloqué pour le moment.</p>
             @endif
         </div>
     </div>

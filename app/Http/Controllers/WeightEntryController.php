@@ -43,7 +43,7 @@ class WeightEntryController extends Controller
 
         return redirect()
             ->route('nhealth.weight.index')
-            ->with('status', $weightEntry->wasRecentlyCreated ? 'Weight entry saved.' : 'Weight entry updated for that date.');
+            ->with('status', $weightEntry->wasRecentlyCreated ? 'Entrée de poids enregistrée.' : 'Entrée de poids mise à jour pour cette date.');
     }
 
     /**
@@ -72,7 +72,7 @@ class WeightEntryController extends Controller
 
         return redirect()
             ->route('nhealth.weight.index')
-            ->with('status', 'Weight entry updated.');
+            ->with('status', 'Entrée de poids mise à jour.');
     }
 
     /**
@@ -84,7 +84,7 @@ class WeightEntryController extends Controller
 
         return redirect()
             ->route('nhealth.weight.index')
-            ->with('status', 'Weight entry deleted.');
+            ->with('status', 'Entrée de poids supprimée.');
     }
 
     /**

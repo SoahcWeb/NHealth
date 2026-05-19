@@ -88,7 +88,7 @@ class DashboardStatsService
     {
         return [
             'labels' => $weightEntries
-                ->map(static fn (WeightEntry $weightEntry): string => $weightEntry->recorded_on->format('d M'))
+                ->map(static fn (WeightEntry $weightEntry): string => $weightEntry->recorded_on->translatedFormat('d M'))
                 ->all(),
             'weights' => $weightEntries
                 ->map(static fn (WeightEntry $weightEntry): float => (float) $weightEntry->weight_kg)
@@ -189,23 +189,23 @@ class DashboardStatsService
      */
     private function buildHabitSummary(Collection $checkIns): array
     {
-        $waterAverage = $this->formatAverage($checkIns->pluck('water_intake_liters'), 'L avg hydration');
-        $stepsAverage = $this->formatAverage($checkIns->pluck('steps'), 'steps avg');
-        $stressAverage = $this->formatAverage($checkIns->pluck('stress_level'), 'stress avg');
+        $waterAverage = $this->formatAverage($checkIns->pluck('water_intake_liters'), 'moyenne hydratation');
+        $stepsAverage = $this->formatAverage($checkIns->pluck('steps'), 'pas de moyenne');
+        $stressAverage = $this->formatAverage($checkIns->pluck('stress_level'), 'stress moyen');
 
         return [
             [
-                'label' => 'Last 7 days',
+                'label' => '7 derniers jours',
                 'value' => $checkIns->count() . '/7',
-                'hint' => 'check-ins recorded',
+                'hint' => 'check-ins enregistrés',
             ],
             [
-                'label' => 'Hydration',
+                'label' => 'Hydratation',
                 'value' => $waterAverage['value'],
                 'hint' => $waterAverage['hint'],
             ],
             [
-                'label' => 'Steps',
+                'label' => 'Pas',
                 'value' => $stepsAverage['value'],
                 'hint' => $stepsAverage['hint'],
             ],
@@ -228,7 +228,7 @@ class DashboardStatsService
         if ($filtered->isEmpty()) {
             return [
                 'value' => '—',
-                'hint' => 'no recent data',
+                'hint' => 'aucune donnée récente',
             ];
         }
 
@@ -258,7 +258,7 @@ class DashboardStatsService
                 return [
                     'key' => $reminder->reminder_key,
                     'title' => $definition['title'] ?? $reminder->reminder_name,
-                    'description' => $definition['description'] ?? 'Internal reminder enabled in your private cockpit.',
+                    'description' => $definition['description'] ?? 'Rappel interne activé dans votre cockpit privé.',
                 ];
             })
             ->all();

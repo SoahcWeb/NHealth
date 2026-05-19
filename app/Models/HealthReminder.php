@@ -55,19 +55,19 @@ class HealthReminder extends Model
                 'key' => self::DAILY_CHECK_IN,
                 'name' => 'Rappel check-in quotidien',
                 'title' => 'Check-in quotidien',
-                'description' => 'Aide-memoire interne pour ne pas oublier votre journal prive chaque jour.',
+                'description' => 'Aide-mémoire interne pour ne pas oublier votre journal privé chaque jour.',
             ],
             [
                 'key' => self::WEIGH_IN,
-                'name' => 'Rappel de pesee',
-                'title' => 'Pesee',
-                'description' => 'Repere visuel pour garder une mesure de poids reguliere dans votre historique dedie.',
+                'name' => 'Rappel de pesée',
+                'title' => 'Pesée',
+                'description' => 'Repère visuel pour garder une mesure de poids régulière dans votre historique dédié.',
             ],
             [
                 'key' => self::ACTIVE_GOAL,
                 'name' => 'Rappel objectif actif',
                 'title' => 'Objectif actif',
-                'description' => 'Invite a revisiter votre objectif actif pour garder une direction claire.',
+                'description' => 'Invite à revisiter votre objectif actif pour garder une direction claire.',
             ],
         ];
     }

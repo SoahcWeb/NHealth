@@ -45,7 +45,7 @@ class MonthlyStatisticsService
 
         return [
             'monthLabel' => $monthStart->translatedFormat('F Y'),
-            'monthRangeLabel' => $monthStart->format('d M Y') . ' - ' . $monthEnd->format('d M Y'),
+            'monthRangeLabel' => $monthStart->translatedFormat('d M Y') . ' - ' . $monthEnd->translatedFormat('d M Y'),
             'stats' => [
                 'check_ins_count' => $monthlyCheckIns->count(),
                 'average_sleep_hours' => $this->calculateAverage($monthlyCheckIns->pluck('sleep_hours')),
@@ -99,7 +99,7 @@ class MonthlyStatisticsService
     {
         return [
             'labels' => $weightEntries
-                ->map(static fn (WeightEntry $weightEntry): string => $weightEntry->recorded_on->format('d M'))
+                ->map(static fn (WeightEntry $weightEntry): string => $weightEntry->recorded_on->translatedFormat('d M'))
                 ->all(),
             'weights' => $weightEntries
                 ->map(static fn (WeightEntry $weightEntry): float => (float) $weightEntry->weight_kg)

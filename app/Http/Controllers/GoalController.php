@@ -43,7 +43,7 @@ class GoalController extends Controller
 
         return redirect()
             ->route('nhealth.goals.index')
-            ->with('status', 'Goal created.');
+            ->with('status', 'Objectif créé.');
     }
 
     /**
@@ -66,7 +66,7 @@ class GoalController extends Controller
 
         return redirect()
             ->route('nhealth.goals.index')
-            ->with('status', 'Goal updated.');
+            ->with('status', 'Objectif mis à jour.');
     }
 
     /**
@@ -78,7 +78,7 @@ class GoalController extends Controller
 
         return redirect()
             ->route('nhealth.goals.index')
-            ->with('status', 'Goal deleted.');
+            ->with('status', 'Objectif supprimé.');
     }
 
     /**

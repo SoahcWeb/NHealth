@@ -61,6 +61,6 @@ class HealthReminderController extends Controller
 
         return redirect()
             ->route('nhealth.reminders.index')
-            ->with('status', 'Internal reminders updated.');
+            ->with('status', 'Rappels internes mis à jour.');
     }
 }

@@ -20,7 +20,7 @@ class GoalProgressService
                 'remaining' => null,
                 'remaining_label' => null,
                 'is_estimable' => false,
-                'message' => 'No active goal yet.',
+                'message' => 'Aucun objectif actif pour le moment.',
             ];
         }
 
@@ -34,7 +34,7 @@ class GoalProgressService
                 'remaining' => null,
                 'remaining_label' => null,
                 'is_estimable' => false,
-                'message' => 'Add enough weight data and numeric targets to estimate progress.',
+                'message' => 'Ajoutez suffisamment de données de poids et des cibles chiffrées pour estimer la progression.',
             ];
         }
 
@@ -46,7 +46,7 @@ class GoalProgressService
             return [
                 'percentage' => 100,
                 'remaining' => 0.0,
-                'remaining_label' => 'Target already matched.',
+                'remaining_label' => 'Objectif déjà atteint.',
                 'is_estimable' => true,
                 'message' => null,
             ];
@@ -64,7 +64,7 @@ class GoalProgressService
         return [
             'percentage' => $percentage,
             'remaining' => $remaining,
-            'remaining_label' => $remaining . ' kg remaining',
+            'remaining_label' => $remaining . ' kg restants',
             'is_estimable' => true,
             'message' => null,
         ];

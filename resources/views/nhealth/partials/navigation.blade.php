@@ -9,7 +9,7 @@
                     'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10' => ! request()->routeIs('nhealth.dashboard'),
                 ])
             >
-                Dashboard
+                Tableau de bord
             </a>
             <a
                 href="{{ route('nhealth.profile.edit') }}"
@@ -19,7 +19,7 @@
                     'border-white/10 bg-white/5 text-slate-200 hover:bg-white/10' => ! request()->routeIs('nhealth.profile.*'),
                 ])
             >
-                Profil sante
+                Profil santé
             </a>
             <a
                 href="{{ route('nhealth.statistics.index') }}"

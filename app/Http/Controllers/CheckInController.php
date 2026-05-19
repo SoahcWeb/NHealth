@@ -49,8 +49,8 @@ class CheckInController extends Controller
             ->with(
                 'status',
                 $checkIn->wasRecentlyCreated
-                    ? 'Daily check-in saved for ' . $checkIn->recorded_on->format('d M Y') . '.'
-                    : 'Daily check-in updated for ' . $checkIn->recorded_on->format('d M Y') . '.',
+                    ? 'Journal quotidien enregistré pour le ' . $checkIn->recorded_on->translatedFormat('d M Y') . '.'
+                    : 'Journal quotidien mis à jour pour le ' . $checkIn->recorded_on->translatedFormat('d M Y') . '.',
             );
     }
 

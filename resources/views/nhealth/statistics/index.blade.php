@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <x-nhealth.page-header
-            eyebrow="NHealth statistics"
-            title="Monthly statistics"
-            :description="'Current month overview for ' . $monthLabel . ' · ' . $monthRangeLabel"
+            eyebrow="Statistiques NHealth"
+            title="Statistiques mensuelles"
+            :description="'Vue d’ensemble du mois en cours pour ' . $monthLabel . ' · ' . $monthRangeLabel"
         >
             <x-slot name="action">
-                <a href="{{ route('nhealth.dashboard') }}" class="nhealth-ghost-link">Back to dashboard</a>
+                <a href="{{ route('nhealth.dashboard') }}" class="nhealth-ghost-link">Retour au tableau de bord</a>
             </x-slot>
         </x-nhealth.page-header>
     </x-slot>
@@ -14,56 +14,56 @@
     <div class="nhealth-shell">
         <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <x-nhealth.stat-card
-                label="Check-ins this month"
+                label="Check-ins ce mois-ci"
                 :value="$stats['check_ins_count']"
-                hint="Private journal entries recorded in the current month."
+                hint="Entrées de journal privé enregistrées pendant le mois en cours."
                 variant="accent"
             />
             <x-nhealth.stat-card
-                label="Sleep average"
+                label="Sommeil moyen"
                 :value="$stats['average_sleep_hours'] !== null ? number_format($stats['average_sleep_hours'], 2) . ' h' : '—'"
-                hint="Average sleep across this month's check-ins."
+                hint="Sommeil moyen sur les check-ins du mois."
             />
             <x-nhealth.stat-card
-                label="Energy average"
+                label="Énergie moyenne"
                 :value="$stats['average_energy_level'] !== null ? number_format($stats['average_energy_level'], 2) : '—'"
-                hint="Average energy level from current month journal entries."
+                hint="Niveau d’énergie moyen sur les entrées du mois."
                 variant="secondary"
             />
             <x-nhealth.stat-card
-                label="Mood average"
+                label="Humeur moyenne"
                 :value="$stats['average_mood_level'] !== null ? number_format($stats['average_mood_level'], 2) : '—'"
-                hint="Average mood level from current month journal entries."
+                hint="Niveau d’humeur moyen sur les entrées du mois."
             />
         </section>
 
         <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <x-nhealth.stat-card
-                label="Start of month weight"
+                label="Poids au début du mois"
                 :value="$stats['month_start_weight_kg'] !== null ? number_format($stats['month_start_weight_kg'], 2) . ' kg' : '—'"
-                hint="First dedicated weight entry recorded this month."
+                hint="Première entrée de poids dédiée enregistrée ce mois-ci."
                 variant="secondary"
             />
             <x-nhealth.stat-card
-                label="Current weight"
+                label="Poids actuel"
                 :value="$stats['current_weight_kg'] !== null ? number_format($stats['current_weight_kg'], 2) . ' kg' : '—'"
-                hint="Latest dedicated weight entry recorded this month."
+                hint="Dernière entrée de poids dédiée enregistrée ce mois-ci."
                 variant="accent"
             />
             <x-nhealth.stat-card
-                label="Weight change"
+                label="Variation du poids"
                 :value="$stats['weight_change_kg'] !== null ? (($stats['weight_change_kg'] > 0 ? '+' : '') . number_format($stats['weight_change_kg'], 2) . ' kg') : '—'"
-                hint="Difference between the first and latest weight entries this month."
+                hint="Différence entre la première et la dernière entrée de poids du mois."
             />
             <x-nhealth.stat-card
-                label="Weight entries"
+                label="Entrées de poids"
                 :value="$stats['weight_entries_count']"
-                :hint="$stats['unlocked_badges_count'] . ' unlocked badges overall.'"
+                :hint="$stats['unlocked_badges_count'] . ' badges débloqués au total.'"
             />
         </section>
 
         <section class="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]">
-            <x-nhealth.section eyebrow="Monthly evolution" title="Weight movement" description="Dedicated weight entries recorded during the current month.">
+            <x-nhealth.section eyebrow="Évolution mensuelle" title="Mouvement du poids" description="Entrées de poids dédiées enregistrées pendant le mois en cours.">
                 <div class="nhealth-chart-frame">
                     @if (count($weightChart['labels']) > 1)
                         <div class="h-80">
@@ -77,19 +77,19 @@
                     @else
                         <x-nhealth.empty-state
                             class="flex h-80 items-center justify-center text-center"
-                            message="Add at least two weight entries this month to visualize your monthly evolution."
+                            message="Ajoutez au moins deux entrées de poids ce mois-ci pour visualiser votre évolution mensuelle."
                         />
                     @endif
                 </div>
             </x-nhealth.section>
 
-            <x-nhealth.section eyebrow="Milestones" title="Unlocked badges" description="Current MVP progression badges already unlocked in your private NHealth space.">
+            <x-nhealth.section eyebrow="Paliers" title="Badges débloqués" description="Badges de progression du MVP déjà débloqués dans votre espace NHealth privé.">
                 @if (count($unlockedBadges) > 0)
                     <div class="grid gap-4">
                         @foreach ($unlockedBadges as $badge)
                             <x-nhealth.widget-card
                                 :label="$badge['title']"
-                                value="Unlocked"
+                                value="Débloqué"
                                 :hint="$badge['achieved_label']"
                                 variant="accent"
                             />
@@ -97,8 +97,8 @@
                     </div>
                 @else
                     <x-nhealth.empty-state
-                        title="No badges unlocked yet"
-                        message="Keep logging check-ins, weight entries and active goals to unlock your first milestones."
+                        title="Aucun badge débloqué pour le moment"
+                        message="Continuez à enregistrer vos check-ins, vos poids et vos objectifs actifs pour débloquer vos premiers paliers."
                     />
                 @endif
             </x-nhealth.section>

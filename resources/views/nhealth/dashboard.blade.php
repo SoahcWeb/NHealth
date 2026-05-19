@@ -1,19 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <x-nhealth.page-header
-            eyebrow="NHealth cockpit"
-            title="Personal dashboard"
-            description="Your private overview of health profile, goals, weight tracking and daily journal."
+            eyebrow="Cockpit NHealth"
+            title="Tableau de bord personnel"
+            description="Votre vue privée du profil santé, des objectifs, du suivi du poids et du journal quotidien."
         >
             <x-slot name="action">
                 <a href="{{ route('nhealth.export.summary') }}" class="nhealth-ghost-link">Exporter mon bilan</a>
-                <a href="{{ route('check-ins.index') }}" class="nhealth-accent-link">Open daily journal</a>
+                <a href="{{ route('check-ins.index') }}" class="nhealth-accent-link">Ouvrir le journal quotidien</a>
             </x-slot>
         </x-nhealth.page-header>
     </x-slot>
 
     <div class="nhealth-shell">
-        <x-nhealth.flash :message="session('status')" title="Module status updated" />
+        <x-nhealth.flash :message="session('status')" title="Statut du module mis à jour" />
 
         @include('nhealth.dashboard.module-status')
 
