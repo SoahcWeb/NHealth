@@ -6,6 +6,7 @@ use App\Http\Controllers\FavoriteModuleController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HealthProfileController;
 use App\Http\Controllers\NHealthDashboardController;
+use App\Http\Controllers\NHealthExportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WeightEntryController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('nhealth')->name('nhealth.')->group(function () {
         Route::get('/dashboard', [NHealthDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/export/summary', [NHealthExportController::class, 'summary'])->name('export.summary');
         Route::post('/module/toggle', [FavoriteModuleController::class, 'toggleNhealth'])->name('module.toggle');
 
         Route::get('/profile', [HealthProfileController::class, 'edit'])->name('profile.edit');

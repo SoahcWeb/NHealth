@@ -6,6 +6,7 @@
             description="Your private overview of health profile, goals, weight tracking and daily journal."
         >
             <x-slot name="action">
+                <a href="{{ route('nhealth.export.summary') }}" class="nhealth-ghost-link">Exporter mon bilan</a>
                 <a href="{{ route('check-ins.index') }}" class="nhealth-accent-link">Open daily journal</a>
             </x-slot>
         </x-nhealth.page-header>
