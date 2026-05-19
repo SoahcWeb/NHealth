@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FavoriteModuleController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HealthProfileController;
 use App\Http\Controllers\NHealthDashboardController;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('nhealth')->name('nhealth.')->group(function () {
         Route::get('/dashboard', [NHealthDashboardController::class, 'index'])->name('dashboard');
+        Route::post('/module/toggle', [FavoriteModuleController::class, 'toggleNhealth'])->name('module.toggle');
 
         Route::get('/profile', [HealthProfileController::class, 'edit'])->name('profile.edit');
         Route::match(['put', 'patch'], '/profile', [HealthProfileController::class, 'update'])->name('profile.update');

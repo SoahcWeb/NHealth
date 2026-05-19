@@ -61,6 +61,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's favorite and activated module preferences.
+     */
+    public function favoriteModules(): HasMany
+    {
+        return $this->hasMany(FavoriteModule::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
